@@ -68,7 +68,7 @@ I have grafted on Swagger for documentation and demonstration purposes.  Swagger
 creating an /api-docs endpoint with some JSON that describes the interface.  Swagger-UI queries this endpoint and
 generates on the fly a nice looking documentation website where you can try out the API.
 
-To make swagger work, I create a "Mdoel" and a "Resource" file along side the backbone-rest object.  These are just Swagger
+To make swagger work, I create a "Model" and a "Resource" file along side the backbone-rest object.  These are just Swagger
 style definitions of the REST model and the methods available to get the resource representation.
 
 ### Built with:
