@@ -47,3 +47,9 @@ Built with:
 
 ![logo](https://github.com/vidigami/backbone-orm/raw/master/media/logo.png)
 
+from vidigami: https://github.com/vidigami
+
+Swagger is here: https://github.com/wordnik/swagger-js
+Swagger-UI is here: https://github.com/wordnik/swagger-ui
+See Swagger-Node-Express for more useful information: https://github.com/wordnik/swagger-node-express
+
