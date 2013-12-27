@@ -11,8 +11,6 @@ swagger = require './public/swagger/swagger'
 ## Rest Dependencies
 RestController = require 'backbone-rest'
 
-
-
 # express
 app = express()
 app.set('port', process.env.PORT || 8002)
@@ -34,12 +32,12 @@ app.get('/', routes.index)
 app.get('/users', user.list)
 
 ## Models
-pet = require './app/models/pet'
+Pet = require './app/models/pet'
 petModel = require './app/models/petmodel'
 petResources = require './app/models/petresource'
 
 ## Rest Controllers
-new RestController(app, {model_type: pet, route: '/pet'})
+new RestController(app, {model_type: Pet, route: '/pet'})
 
 swagger.setAppHandler(app)
 
@@ -60,6 +58,7 @@ swagger.setAppHandler(app)
 swagger.addModels(petModel)
   .addGet(petResources.getPet)
   .addGet(petResources.getPets)
+  .addGet(petResources.getAvailablePets)
   .addPost(petResources.postPet)
   .addPut(petResources.putPet)
   .addDelete(petResources.deletePet)

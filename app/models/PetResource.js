@@ -32,7 +32,7 @@
 
   exports.getPets = {
     'spec': {
-      description: "Operations about pets",
+      description: "Get a list of pets based on query examples.",
       path: "/pet",
       method: "GET",
       summary: "Find by Query",
@@ -45,10 +45,57 @@
     }
   };
 
+  exports.getAvailablePets = {
+    'spec': {
+      description: "Get available pets",
+      path: "/availablePet",
+      method: "GET",
+      summary: "Find available pets",
+      notes: "Return a list of available",
+      type: "Pet",
+      nickname: "getAvailablePets",
+      produces: ["application/json"],
+      parameters: [param.query("name", "Name of the pet.", "string"), param.query("category", "Category of the pet", "string")],
+      responseMessages: [swe.notFound('pet')]
+    },
+    'action': function(req, res) {
+      var Pet, queryObject;
+      console.log("getAvailablePets Action: " + req.url);
+      queryObject = JSON.stringify(url.parse(req.url, true).query);
+      if (!queryObject) {
+        throw swe.invalid('status');
+      }
+      if (queryObject) {
+        console.log("query: " + queryObject);
+      } else {
+        console.log("getAvailablePets:: No Query");
+      }
+      Pet = require('./pet');
+      return Pet.find(JSON.parse(queryObject), function(err, pets) {
+        var output, pet;
+        if (err) {
+          throw swe.notFound('pet');
+        }
+        output = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = pets.length; _i < _len; _i++) {
+            pet = pets[_i];
+            if (pet.get('status') === 'available') {
+              _results.push(pet);
+            }
+          }
+          return _results;
+        })();
+        return res.send(JSON.stringify(output));
+      });
+    }
+  };
+
   exports.postPet = {
     'spec': {
       path: "/pet",
-      notes: "adds a pet to the store",
+      notes: "Adds a pet to the store",
       summary: "Add a new pet to the store",
       notes: "takes a JSON body with the data.",
       method: "POST",
@@ -61,7 +108,7 @@
   exports.putPet = {
     'spec': {
       path: "/pet/{petId}",
-      notes: "updates a pet in the store",
+      notes: "Updates a pet in the store",
       method: "PUT",
       summary: "Update an existing pet",
       parameters: [param.path("petId", "ID of pet that needs to be removed", "string"), param.body("Pet", "Pet object that needs to be updated in the store", "Pet")],
@@ -73,7 +120,7 @@
   exports.deletePet = {
     'spec': {
       path: "/pet/{petId}",
-      notes: "removes a pet from the store",
+      notes: "Removes a pet from the store",
       method: "DELETE",
       summary: "Remove an existing pet",
       parameters: [param.path("petId", "ID of pet that needs to be removed", "string")],
