@@ -9,7 +9,7 @@ writeResponse = (res, data) ->
   res.send(JSON.stringify(data))
 
 # the description will be picked up in the resource listing
-exports.getPet = {
+exports.getPetById = {
   'spec': {
     description: "Operations about pets",
     path: "/pet/{petId}",
@@ -22,19 +22,8 @@ exports.getPet = {
     parameters: [param.path("petId", "ID of pet that needs to be fetched", "string")],
     responseMessages: [swe.invalid('id'), swe.notFound('pet')]
   }
-#  'action': (req,res) ->
-#    if (!req.params.petId)
-#      throw swe.invalid('id');
-#    id = parseInt(req.params.petId);
-#    pet = petData.getPetById(id);
-#
-#    if(pet)
-#      console.log('getPet:Found: '+JSON.stringify(pet))
-#      res.send(JSON.stringify(pet))
-#    else
-#      console.log("getPet::Not Found.")
-#      throw swe.notFound('pet')
-
+  'action': (req,res) ->
+    console.log("hi from getPets")
 }
 
 exports.getPets = {
@@ -44,42 +33,149 @@ exports.getPets = {
     method: "GET",
     summary: "Find by Query",
     notes: "Return a pet based on query parameters",
-    type: "Pet",
+    type: "array",
+    items: {
+      $ref: "Pet"
+    },
     nickname: "getPets",
     produces: ["application/json"],
     parameters: [param.query("name", "Name of the pet.", "string"),param.query("category", "Category of the pet", "string"),param.query("status", "Status of the pet", "string")],
     responseMessages: [swe.notFound('pet')]
   }
+  'action': (req,res) ->
+    console.log("hi from getPets")
 }
 
-exports.getAvailablePets = {
+###
+  Used the url path "pets" for representations other than CRUD on the model because
+  backbone-rest overrides all "noun/path" as the "noun/id" path.  In order to get this
+  controller to respond, it needs a different noun.
+###
+exports.getAvailable = {
   'spec': {
     description: "Get available pets",
-    path: "/availablePet",
+    path: "/pets/available",
     method: "GET",
     summary: "Find available pets",
     notes: "Return a list of available",
-    type: "Pet",
-    nickname: "getAvailablePets",
+    type: "array",
+    items: {
+      $ref: "Pet"
+    },
+    nickname: "getAvailable",
     produces: ["application/json"],
     parameters: [param.query("name", "Name of the pet.", "string"),param.query("category", "Category of the pet", "string")],
-    responseMessages: [swe.notFound('pet')]
+    responseMessages: [swe.notFound('pet'), swe.invalid('input')]
   }
   'action': (req,res) ->
     console.log("getAvailablePets Action: #{req.url}")
     queryObject = JSON.stringify(url.parse(req.url,true).query)
     if (!queryObject)
-      throw swe.invalid('status')
-    if queryObject
-      console.log("query: #{queryObject}")
-    else
-      console.log("getAvailablePets:: No Query")
-    Pet = require './pet'
+      throw swe.invalid('query parameters')
 
+    Pet = require './pet'
     Pet.find(JSON.parse(queryObject), (err, pets) ->
       throw swe.notFound('pet') if err
       output = (pet for pet in pets when pet.get('status') is 'available')
       res.send(JSON.stringify(output))
+    )
+}
+exports.getAvailableCows = {
+  'spec': {
+    description: "Get available cows",
+    path: "/pets/available/cows",
+    method: "GET",
+    summary: "Find available cows",
+    notes: "Return a list of available",
+    type: "array",
+    items: {
+      $ref: "Pet"
+    },
+    nickname: "getAvailableDogs",
+    produces: ["application/json"],
+    parameters: [param.query("name", "Name of the pet.", "string")],
+    responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+  }
+  'action': (req,res) ->
+    console.log("getAvailableDogs Action: #{req.url}")
+    queryObject = url.parse(req.url,true).query
+    queryObject['category'] = 'cow'
+    queryObject['status'] = 'available'
+    queryObject = JSON.stringify(queryObject)
+
+    if (!queryObject)
+      throw swe.invalid('query parameters')
+
+    Pet = require './pet'
+    Pet.find(JSON.parse(queryObject), (err, pets) ->
+      throw swe.notFound('pet') if err
+      res.send(JSON.stringify(pets))
+    )
+}
+
+exports.getAvailableCows = {
+  'spec': {
+    description: "Get available cows",
+    path: "/pets/available/cows",
+    method: "GET",
+    summary: "Find available cows",
+    notes: "Return a list of available",
+    type: "array",
+    items: {
+      $ref: "Pet"
+    },
+    nickname: "getAvailableCows",
+    produces: ["application/json"],
+    parameters: [param.query("name", "Name of the pet.", "string")],
+    responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+  }
+  'action': (req,res) ->
+    console.log("getAvailable/Cows Action: #{req.url}")
+    queryObject = url.parse(req.url,true).query
+    queryObject['category'] = 'cow'
+    queryObject['status'] = 'available'
+    queryObject = JSON.stringify(queryObject)
+
+    if (!queryObject)
+      throw swe.invalid('query parameters')
+
+    Pet = require './pet'
+    Pet.find(JSON.parse(queryObject), (err, pets) ->
+      throw swe.notFound('pet') if err
+      res.send(JSON.stringify(pets))
+    )
+}
+
+exports.getAvailableCows2 = {
+  'spec': {
+    description: "Get available cows 2",
+    path: "/pets/availableCows",
+    method: "GET",
+    summary: "Find available cows",
+    notes: "Return a list of available",
+    type: "array",
+    items: {
+      $ref: "Pet"
+    },
+    nickname: "getAvailableCows2",
+    produces: ["application/json"],
+    parameters: [param.query("name", "Name of the pet.", "string")],
+    responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+  }
+  'action': (req,res) ->
+    console.log("getAvailableCows Action: #{req.url}")
+    queryObject = url.parse(req.url,true).query
+    queryObject['category'] = 'cow'
+    queryObject['status'] = 'available'
+    queryObject = JSON.stringify(queryObject)
+
+    if (!queryObject)
+      throw swe.invalid('query parameters')
+
+    Pet = require './pet'
+    Pet.find(JSON.parse(queryObject), (err, pets) ->
+      throw swe.notFound('pet') if err
+      res.send(JSON.stringify(pets))
     )
 }
 

@@ -15,7 +15,7 @@
     return res.send(JSON.stringify(data));
   };
 
-  exports.getPet = {
+  exports.getPetById = {
     'spec': {
       description: "Operations about pets",
       path: "/pet/{petId}",
@@ -27,6 +27,9 @@
       produces: ["application/json"],
       parameters: [param.path("petId", "ID of pet that needs to be fetched", "string")],
       responseMessages: [swe.invalid('id'), swe.notFound('pet')]
+    },
+    'action': function(req, res) {
+      return console.log("hi from getPets");
     }
   };
 
@@ -37,38 +40,49 @@
       method: "GET",
       summary: "Find by Query",
       notes: "Return a pet based on query parameters",
-      type: "Pet",
+      type: "array",
+      items: {
+        $ref: "Pet"
+      },
       nickname: "getPets",
       produces: ["application/json"],
       parameters: [param.query("name", "Name of the pet.", "string"), param.query("category", "Category of the pet", "string"), param.query("status", "Status of the pet", "string")],
       responseMessages: [swe.notFound('pet')]
+    },
+    'action': function(req, res) {
+      return console.log("hi from getPets");
     }
   };
 
-  exports.getAvailablePets = {
+  /*
+    Used the url path "pets" for representations other than CRUD on the model because
+    backbone-rest overrides all "noun/path" as the "noun/id" path.  In order to get this
+    controller to respond, it needs a different noun.
+  */
+
+
+  exports.getAvailable = {
     'spec': {
       description: "Get available pets",
-      path: "/availablePet",
+      path: "/pets/available",
       method: "GET",
       summary: "Find available pets",
       notes: "Return a list of available",
-      type: "Pet",
-      nickname: "getAvailablePets",
+      type: "array",
+      items: {
+        $ref: "Pet"
+      },
+      nickname: "getAvailable",
       produces: ["application/json"],
       parameters: [param.query("name", "Name of the pet.", "string"), param.query("category", "Category of the pet", "string")],
-      responseMessages: [swe.notFound('pet')]
+      responseMessages: [swe.notFound('pet'), swe.invalid('input')]
     },
     'action': function(req, res) {
       var Pet, queryObject;
       console.log("getAvailablePets Action: " + req.url);
       queryObject = JSON.stringify(url.parse(req.url, true).query);
       if (!queryObject) {
-        throw swe.invalid('status');
-      }
-      if (queryObject) {
-        console.log("query: " + queryObject);
-      } else {
-        console.log("getAvailablePets:: No Query");
+        throw swe.invalid('query parameters');
       }
       Pet = require('./pet');
       return Pet.find(JSON.parse(queryObject), function(err, pets) {
@@ -88,6 +102,114 @@
           return _results;
         })();
         return res.send(JSON.stringify(output));
+      });
+    }
+  };
+
+  exports.getAvailableCows = {
+    'spec': {
+      description: "Get available cows",
+      path: "/pets/available/cows",
+      method: "GET",
+      summary: "Find available cows",
+      notes: "Return a list of available",
+      type: "array",
+      items: {
+        $ref: "Pet"
+      },
+      nickname: "getAvailableDogs",
+      produces: ["application/json"],
+      parameters: [param.query("name", "Name of the pet.", "string")],
+      responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+    },
+    'action': function(req, res) {
+      var Pet, queryObject;
+      console.log("getAvailableDogs Action: " + req.url);
+      queryObject = url.parse(req.url, true).query;
+      queryObject['category'] = 'cow';
+      queryObject['status'] = 'available';
+      queryObject = JSON.stringify(queryObject);
+      if (!queryObject) {
+        throw swe.invalid('query parameters');
+      }
+      Pet = require('./pet');
+      return Pet.find(JSON.parse(queryObject), function(err, pets) {
+        if (err) {
+          throw swe.notFound('pet');
+        }
+        return res.send(JSON.stringify(pets));
+      });
+    }
+  };
+
+  exports.getAvailableCows = {
+    'spec': {
+      description: "Get available cows",
+      path: "/pets/available/cows",
+      method: "GET",
+      summary: "Find available cows",
+      notes: "Return a list of available",
+      type: "array",
+      items: {
+        $ref: "Pet"
+      },
+      nickname: "getAvailableCows",
+      produces: ["application/json"],
+      parameters: [param.query("name", "Name of the pet.", "string")],
+      responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+    },
+    'action': function(req, res) {
+      var Pet, queryObject;
+      console.log("getAvailable/Cows Action: " + req.url);
+      queryObject = url.parse(req.url, true).query;
+      queryObject['category'] = 'cow';
+      queryObject['status'] = 'available';
+      queryObject = JSON.stringify(queryObject);
+      if (!queryObject) {
+        throw swe.invalid('query parameters');
+      }
+      Pet = require('./pet');
+      return Pet.find(JSON.parse(queryObject), function(err, pets) {
+        if (err) {
+          throw swe.notFound('pet');
+        }
+        return res.send(JSON.stringify(pets));
+      });
+    }
+  };
+
+  exports.getAvailableCows2 = {
+    'spec': {
+      description: "Get available cows 2",
+      path: "/pets/availableCows",
+      method: "GET",
+      summary: "Find available cows",
+      notes: "Return a list of available",
+      type: "array",
+      items: {
+        $ref: "Pet"
+      },
+      nickname: "getAvailableCows2",
+      produces: ["application/json"],
+      parameters: [param.query("name", "Name of the pet.", "string")],
+      responseMessages: [swe.notFound('pet'), swe.invalid('input')]
+    },
+    'action': function(req, res) {
+      var Pet, queryObject;
+      console.log("getAvailableCows Action: " + req.url);
+      queryObject = url.parse(req.url, true).query;
+      queryObject['category'] = 'cow';
+      queryObject['status'] = 'available';
+      queryObject = JSON.stringify(queryObject);
+      if (!queryObject) {
+        throw swe.invalid('query parameters');
+      }
+      Pet = require('./pet');
+      return Pet.find(JSON.parse(queryObject), function(err, pets) {
+        if (err) {
+          throw swe.notFound('pet');
+        }
+        return res.send(JSON.stringify(pets));
       });
     }
   };

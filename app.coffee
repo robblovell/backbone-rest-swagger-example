@@ -56,15 +56,22 @@ swagger.setAppHandler(app)
 
 # Add models and methods to swagger
 swagger.addModels(petModel)
-  .addGet(petResources.getPet)
   .addGet(petResources.getPets)
-  .addGet(petResources.getAvailablePets)
+  .addGet(petResources.getAvailable)
+  .addGet(petResources.getAvailableCows)
+  .addGet(petResources.getAvailableCows2)
+  .addGet(petResources.getPetById)
   .addPost(petResources.postPet)
   .addPut(petResources.putPet)
   .addDelete(petResources.deletePet)
 
 swagger.configureDeclaration("pet", {
-  description : "REST for Pets",
+  description : "REST CRUD for Pets",
+  authorizations : ["oauth2"],
+  produces: ["application/json"]
+})
+swagger.configureDeclaration("pets", {
+  description : "REST representations for Pets",
   authorizations : ["oauth2"],
   produces: ["application/json"]
 })
