@@ -6,7 +6,7 @@ routes = require('./routes')
 user = require('./routes/user')
 
 url = require("url")
-swagger = require './swagger/swagger'
+swagger = require './public/swagger/swagger'
 
 ## Rest Dependencies
 RestController = require 'backbone-rest'
@@ -72,7 +72,7 @@ swagger.configureDeclaration("pet", {
 
 # set api info
 swagger.setApiInfo({
-  title: "Swagger Sample App",
+  title: "Backbone-REST Pet Example API",
   description: "Learning REST server. For this sample, you can use the api key \"special-key\" to test the authorization filters",
   termsOfServiceUrl: "Whatever",
   contact: "robb@appnovation.com",
@@ -91,7 +91,7 @@ swagger.configureSwaggerPaths("", "/api-docs", "")
 swagger.configure("http://localhost:8002", "0.1")
 
 # Serve up swagger ui at /docs via static route
-docs_handler = express.static(path.join(__dirname, './swagger/swagger-ui'))
+docs_handler = express.static(path.join(__dirname, './public'))
 
 app.get(/^\/docs(\/.*)?$/, (req, res, next) ->
   if (req.url == '/docs')  # express static barfs on root url w/o trailing slash

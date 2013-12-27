@@ -14,7 +14,7 @@
 
   url = require("url");
 
-  swagger = require('./swagger/swagger');
+  swagger = require('./public/swagger/swagger');
 
   RestController = require('backbone-rest');
 
@@ -72,7 +72,7 @@
   });
 
   swagger.setApiInfo({
-    title: "Swagger Sample App",
+    title: "Backbone-REST Pet Example API",
     description: "Learning REST server. For this sample, you can use the api key \"special-key\" to test the authorization filters",
     termsOfServiceUrl: "Whatever",
     contact: "robb@appnovation.com",
@@ -91,7 +91,7 @@
 
   swagger.configure("http://localhost:8002", "0.1");
 
-  docs_handler = express["static"](path.join(__dirname, './swagger/swagger-ui'));
+  docs_handler = express["static"](path.join(__dirname, './public'));
 
   app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
     if (req.url === '/docs') {

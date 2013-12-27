@@ -2,9 +2,9 @@
 (function() {
   var param, sw, swe, url, writeResponse;
 
-  sw = require('./../../swagger/swagger');
+  sw = require('./../../public/swagger/swagger');
 
-  param = require("./../../swagger/paramTypes");
+  param = require("./../../public/swagger/paramTypes");
 
   url = require("url");
 
