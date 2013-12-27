@@ -23,6 +23,8 @@ A few obvious things that need to be stated to be clear:
 * To create a record, just send the fields you want in the record as a JSON object in the body of the request:
 ```
   POST /pet/
+```
+```
   Content-Type: application/json
   {
     "name": "butch",
@@ -30,7 +32,7 @@ A few obvious things that need to be stated to be clear:
     "status": "available"
   }
 ```
-  The server will send the object back in the response with the primary id assigned.
+  The server will send the object back in the response with the primary id assigned (say 52bc781a2448cc0000000004).
 
 * To update a record, use PUT.  The ID is sent in the url, and the updated fields are put in the body of the message.
 ```
@@ -46,6 +48,8 @@ A few obvious things that need to be stated to be clear:
 * Use GET to retrieve the object in various ways using mongodb like query by example with the query parameters in the url.
 ```
   GET /pet?id=52bc781a2448cc0000000004
+```
+```
   GET /pet??category=dog&name="really-butch"
 ```
 * Use DELETE to remove an object pass the id of the object in the url.
