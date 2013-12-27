@@ -1,4 +1,4 @@
-BackboneREST full example using bog standard express code, combined with swagger for documentation.
+BackboneREST minimal example using bog standard express code, combined with swagger for documentation.
 
 ### Install
 
