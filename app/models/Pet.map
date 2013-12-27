@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "Pet.js",
+  "sourceRoot": "",
+  "sources": [
+    "Pet.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,aAAA;KAAA;oSAAA;;CAAA,CAAA,CAAW,IAAA,CAAX,EAAW;;CAAX,CAEM;CACJ;;;;;CAAA;;CAAA,EAAS,IAAT,2BAAA;;CAAA,EACM,CAAN,GAAM,SAAA;;CADN;;CADgB,OAAQ;;CAF1B,CAMA,CAAiB,GAAX,CAAN;CANA"
+}
