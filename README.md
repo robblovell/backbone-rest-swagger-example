@@ -1,8 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/vidigami/backbone-orm.png)](http://travis-ci.org/vidigami/backbone-orm)
-
-![logo](https://github.com/vidigami/backbone-orm/raw/master/media/logo.png)
-
-BackboneREST full example using bog standard express code.
+BackboneREST full example using bog standard express code, combined with swagger for documentation.
 
 A few obvious things that need to be stated to be clear:
 
@@ -46,3 +42,8 @@ generates on the fly a nice looking documentation website where you can try out 
 
 To make swagger work, I create a "Mdoel" and a "Resource" file along side the backbone-rest object.  These are just Swagger
 style definitions of the REST model and the methods available to get the resource representation.
+
+Built with:
+
+![logo](https://github.com/vidigami/backbone-orm/raw/master/media/logo.png)
+
