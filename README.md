@@ -1,5 +1,18 @@
 BackboneREST full example using bog standard express code, combined with swagger for documentation.
 
+Install
+
+In the root of the project:
+
+  npm install
+  node app.js
+
+Navigate to:  http://localhost:8002/docs
+
+Notes
+
+This is a coffeescript program, so to modify it, you will need to know coffeescript and how to compile it. :)
+
 A few obvious things that need to be stated to be clear:
 
 * Make sure the header contains Content-Type=application/json in all requests. Without it, the server will just make new records with no fields and just return an id.
