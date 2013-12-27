@@ -45,17 +45,22 @@ A few obvious things that need to be stated to be clear:
     "status": "not available"
   }
 ```
+
 * Use GET to retrieve the object in various ways using mongodb like query by example with the query parameters in the url.
+
 ```
   GET /pet?id=52bc781a2448cc0000000004
 ```
 ```
   GET /pet??category=dog&name="really-butch"
 ```
+
 * Use DELETE to remove an object pass the id of the object in the url.
+
 ```
   DELETE /pet/52bc781a2448cc0000000004
 ```
+
 * Make sure you have mongodb installed. This example assumes a standard mongodb install on port 27017. You won't have to create the database or the collection.
 * If you are playing around with the in memory Models and the MongoDB models, be aware that the sync property changes between backbone-orm and backbone-mongo.
 
